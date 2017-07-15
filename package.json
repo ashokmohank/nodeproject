@@ -1,0 +1,23 @@
+{
+  "name": "nodeproject",
+  "version": "1.0.0",
+  "description": "Node API server",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ashokmohank/nodeproject.git"
+  },
+  "keywords": [
+    "node",
+    "api"
+  ],
+  "author": "Ashok Mohan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ashokmohank/nodeproject/issues"
+  },
+  "homepage": "https://github.com/ashokmohank/nodeproject#readme"
+}
