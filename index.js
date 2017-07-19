@@ -1,10 +1,12 @@
 'use strict'
 
-const logger = require('winston')
-
+const bunyan = require('bunyan')
+const config = require('config')
 const type = 'web'
 
-logger.info(`Starting '${type}' process`, { pid: process.pid })
+var log = bunyan.createLogger({name: 'myapp'});
+
+log.info(`Starting '${type}' process`, { pid: process.pid })
 
 if (type === 'web') {
   require('./web')

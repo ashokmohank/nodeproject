@@ -1,7 +1,9 @@
 'use strict'
 
 const get = require('./get')
-
-module.exports = {
-  get: get
-}
+const users = require('./usercontroller')
+console.log('user/api/index');
+module.exports = users
+//{
+//  get: get
+//}

@@ -20,6 +20,9 @@ router.get('/', function(req, res) {
     res.json({ message: 'hooray! welcome to our api!' });   
 });
 
-router.get('/api/users', api.users.get);
+//router.get('/api/user', api.users.get);
+router.route('/api/users')
+  .post(api.users.postUsers)
+  .get(api.users.getUsers);
 
 module.exports = router
