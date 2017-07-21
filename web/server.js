@@ -9,11 +9,11 @@ var app        = express();                 // define our app using express
 var mongoose   = require('mongoose');
 var bodyParser = require('body-parser');
 var passport   = require('passport');
-var authController = require('./middleware/auth');
+require('./middleware/auth');
+var oauth2 = require('./middleware/oauth2');
 
 // Connect to the MongoDB
-mongoose.connect('mongodb://admin:admin@cluster0-shard-00-00-8pkak.mongodb.net:27017,cluster0-shard-00-01-8pkak.mongodb.net:27017,cluster0-shard-00-02-8pkak.mongodb.net:27017/security?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin');
-
+var db = require('./db/mongoose')
 
 //const middleware = require('./middleware')
 const router = require('./router')
@@ -32,7 +32,7 @@ app.all('/*', function(req, res, next) {
   // CORS headers
   res.header("Access-Control-Allow-Origin", "*"); // restrict it to the required domain
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-console.log(req.method)
+  console.log(req.method)
   // Set custom headers for CORS
   res.header('Access-Control-Allow-Headers', 'Content-type,Accept,X-Access-Token,X-Key');
   if (req.method == 'OPTIONS') {
@@ -44,8 +44,8 @@ console.log(req.method)
 
 //logger.info('here')
 
-//app.all('/api/*', [require('./middleware/auth')]);
-app.all('/api/*', authController.isAuthenticated);
+app.all('/api/*', passport.authenticate('bearer', { session: false }));
+app.all('/token', oauth2.token);
 app.use('/',router);
 
 

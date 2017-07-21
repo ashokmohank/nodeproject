@@ -22,15 +22,18 @@
   },
   "homepage": "https://github.com/ashokmohank/nodeproject#readme",
   "dependencies": {
-    "bcrypt-nodejs": "0.0.3",
     "body-parser": "1.17.2",
     "bunyan": "1.8.10",
     "config": "1.26.1",
     "cookie-parser": "1.4.3",
+    "crypto": "0.0.3",
     "express": "4.15.3",
     "mongoose": "4.11.3",
+    "oauth2orize": "1.8.0",
     "passport": "0.3.2",
-    "passport-http": "0.3.0"
+    "passport-http": "0.3.0",
+    "passport-http-bearer": "1.0.1",
+    "passport-oauth2-client-password": "0.1.2"
   },
   "devDependencies": {
     "nodemon": "1.11.0"

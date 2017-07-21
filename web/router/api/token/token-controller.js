@@ -1,15 +1,11 @@
 // Load required packages
-var libs = process.cwd() + '/web/';
-var User = require(libs + 'model/user');
-//var User = require('../../../model/user');
+var User = require('./tokenmodel');
 
 // Create endpoint /api/users for POST
 exports.postUsers = function(req, res) {
   var user = new User({
     username: req.body.username,
-    //password: req.body.password
-    hashedPassword: req.body.hashedPassword,
-    salt: 'a'
+    password: req.body.password
   });
 
   user.save(function(err) {
@@ -21,8 +17,8 @@ exports.postUsers = function(req, res) {
 };
 
 // Create endpoint /api/users for GET
-exports.getUsers = function(req, res) {
-  console.log("getusers accessed")
+exports.getToken = function(req, res) {
+  console.log("getToken accessed")
   User.find(function(err, users) {
     if (err)
       res.send(err);

@@ -4,6 +4,8 @@ const express = require('express')
 
 const api = require('./api')
 
+const oauth = require('../middleware/oauth2')
+
 // ROUTES FOR OUR API
 // =============================================================================
 var router = express.Router();              // get an instance of the express Router
@@ -20,9 +22,15 @@ router.get('/', function(req, res) {
     res.json({ message: 'hooray! welcome to our api!' });   
 });
 
+//Token Generator
+router.route('/token')
+  .post(oauth.token)
+
 //router.get('/api/user', api.users.get);
 router.route('/api/users')
   .post(api.users.postUsers)
   .get(api.users.getUsers);
+
+
 
 module.exports = router
