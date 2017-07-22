@@ -13,9 +13,36 @@ var AccessToken = require(libs + 'model/accessToken');
 var RefreshToken = require(libs + 'model/refreshToken');
 
 passport.use(new BasicStrategy(
-    function(username, password, done) {
-console.log('basic str auth1'+username);
-        Client.findOne({ clientId: username }, function(err, client) {
+{passReqToCallback: true},
+    function(req, username, password, done) {
+        console.log('basic str auth1'+req.body.clientId);
+	User.findOne({ username: username }, function(err, user) {
+            if (err) { 
+            	return done(err); 
+            }
+
+            if (!user || !user.checkPassword(password)) {
+			return done(null, false);
+		}
+
+	    //return done(null, user);
+	    Client.findOne({ clientId: req.body.clientId }, function(err, client) {
+		    if (err) { 
+		    	return done(err); 
+		    }
+
+		    if (!client) { 
+		    	return done(null, false); 
+		    }
+
+		    if (client.clientSecret !== req.body.clientSecret) { 
+		    	return done(null, false); 
+		    }
+
+		    return done(null, client);
+            });
+        });
+        /*Client.findOne({ clientId: username }, function(err, client) {
             if (err) { 
             	return done(err); 
             }
@@ -29,12 +56,13 @@ console.log('basic str auth1'+username);
             }
 
             return done(null, client);
-        });
+        });*/
     }
 ));
 
 passport.use(new ClientPasswordStrategy(
     function(clientId, clientSecret, done) {
+        console.log('client pwd'+clientId);
         Client.findOne({ clientId: clientId }, function(err, client) {
             if (err) { 
             	return done(err); 
@@ -55,6 +83,7 @@ passport.use(new ClientPasswordStrategy(
 
 passport.use(new BearerStrategy(
     function(accessToken, done) {
+	console.log('bearer str ');
         AccessToken.findOne({ token: accessToken }, function(err, token) {
 
             if (err) { 
