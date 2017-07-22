@@ -1,8 +1,8 @@
 'use strict'
 
 const app = require('./server')
-
-var port = process.env.PORT || 8080;        // set our port
+var config = require('config');
+var port = config.get('nodeproject.server.port') || 8080;        // set our port
 
 // START THE SERVER
 // =============================================================================

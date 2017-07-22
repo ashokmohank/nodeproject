@@ -4,7 +4,8 @@ var crypto = require('crypto');
 
 var libs = process.cwd() + '/web/';
 
-//var config = require(libs + 'config');
+var config = require('config');
+var tokenLife = config.get('nodeproject.security.tokenLife'); 
 //var log = require(libs + 'log')(module);
 
 var db = require(libs + 'db/mongoose');
@@ -53,15 +54,14 @@ var generateTokens = function (data, done) {
     		return done(err); 
     	}
     	done(null, tokenValue, refreshTokenValue, { 
-    		//'expires_in': config.get('security:tokenLife') 
-    		'expires_in': 3600 
+    		'expires_in': tokenLife 
     	});
     });
 };
 
 // Exchange username & password for access token.
 aserver.exchange(oauth2orize.exchange.password(function(client, username, password, scope, done) {
-			console.log('exchange'+client );
+	console.log('exchange' );
 	User.findOne({ username: username }, function(err, user) {
 		if (err) { 
 			return done(err); 
@@ -83,7 +83,7 @@ aserver.exchange(oauth2orize.exchange.password(function(client, username, passwo
 
 // Exchange refreshToken for access token.
 aserver.exchange(oauth2orize.exchange.refreshToken(function(client, refreshToken, scope, done) {
-        console.log('refresh token'+client);
+        console.log('refresh token');
 	RefreshToken.findOne({ token: refreshToken, clientId: client.clientId }, function(err, token) {
 		if (err) { 
 			return done(err); 

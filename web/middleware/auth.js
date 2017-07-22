@@ -2,18 +2,17 @@ var passport = require('passport');
 var BasicStrategy = require('passport-http').BasicStrategy;
 var ClientPasswordStrategy = require('passport-oauth2-client-password').Strategy;
 var BearerStrategy = require('passport-http-bearer').Strategy;
+var config = require('config');
+var tokenLife = config.get('nodeproject.security.tokenLife'); 
 
 var libs = process.cwd() + '/web/';
-
-//var config = require(libs + 'config');
-
 var User = require(libs + 'model/user');
 var Client = require(libs + 'model/client');
 var AccessToken = require(libs + 'model/accessToken');
 var RefreshToken = require(libs + 'model/refreshToken');
 
 passport.use(new BasicStrategy(
-{passReqToCallback: true},
+    {passReqToCallback: true},
     function(req, username, password, done) {
         console.log('basic str auth1'+req.body.clientId);
 	User.findOne({ username: username }, function(err, user) {
@@ -94,8 +93,7 @@ passport.use(new BearerStrategy(
             	return done(null, false); 
             }
 
-//            if( Math.round((Date.now()-token.created)/1000) > config.get('security:tokenLife') ) {
-            if( Math.round((Date.now()-token.created)/1000) > 3600 ) {
+            if( Math.round((Date.now()-token.created)/1000) > tokenLife ) {
 
                 AccessToken.remove({ token: accessToken }, function (err) {
                     if (err) {

@@ -9,14 +9,11 @@ var app        = express();                 // define our app using express
 var mongoose   = require('mongoose');
 var bodyParser = require('body-parser');
 var passport   = require('passport');
-require('./middleware/auth');
-var oauth2 = require('./middleware/oauth2');
-
 // Connect to the MongoDB
 var db = require('./db/mongoose')
-
-//const middleware = require('./middleware')
+const middleware = require('./middleware')
 const router = require('./router')
+var logger = middleware.logger;
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -42,12 +39,13 @@ app.all('/*', function(req, res, next) {
   }
 });
 
-//logger.info('here')
-
-app.all('/api/*', passport.authenticate('bearer', { session: false }));
-app.all('/token', oauth2.token);
 app.use('/',router);
-
+app.use('/', function (req, res, next) {
+    req.log = logger;
+    next();
+});
+app.all('/token', middleware.oauth2.token);
+app.all('/api/*', passport.authenticate('bearer', { session: false }));
 
 
 module.exports = app
