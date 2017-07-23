@@ -1,9 +1,9 @@
 'use strict'
 
 const users = require('./users')
-//const token = require('./token')
+const test = require('./test')
 
 module.exports = {
   users
-  //,token
+  ,test
 }
