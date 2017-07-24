@@ -35,7 +35,7 @@ var generateTokens = function (data, done) {
 
     RefreshToken.remove(data, errorHandler);
     AccessToken.remove(data, errorHandler);
-
+    //use json web token  jwt it can encode username/expiry within it
     tokenValue = crypto.randomBytes(32).toString('hex');
     refreshTokenValue = crypto.randomBytes(32).toString('hex');
 

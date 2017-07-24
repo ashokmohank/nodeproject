@@ -1,3 +1,4 @@
 module.exports = (req, res) => {
-  res.status(200).json({ "testkey":"testSuccess" });
+  var printVal = req.method+' '+req.route.path+' '+req.headers.authorization
+  res.status(200).json({ "testkey":printVal });
 };

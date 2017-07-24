@@ -11,7 +11,7 @@ var router = express.Router();          // get an instance of the express Router
 // =============================================================================
 router.use(function(req, res, next) {
     // do logging
-    console.log('being accessed..');
+    console.log('being accessed..'+req.route.path);
     next(); // make sure we go to the next routes and don't stop here
 });
 
@@ -33,7 +33,8 @@ router.route('/api/users')
   .post(api.users.postUsers)
   .get(api.users.getUsers);
 //test component - To experiment development
-router.route('/api/test')
+//router.route('/api/test')
+//  .get(api.test);
+router.route('/api/test/:id')
   .get(api.test);
-
 module.exports = router

@@ -4,8 +4,10 @@
   "description": "Node API server",
   "main": "index.js",
   "scripts": {
-    "start": "node .",
-    "devstart": "nodemon ."
+    "start": "nodemon index.js --exec babel-node",
+    "build": "babel web -d dist",
+    "serve": "node .",
+    "test": "mocha --compilers js:babel-register"
   },
   "repository": {
     "type": "git",
@@ -28,6 +30,8 @@
     "cookie-parser": "1.4.3",
     "crypto": "0.0.3",
     "express": "4.15.3",
+    "express-graphql": "0.6.6",
+    "graphql": "0.10.5",
     "mongoose": "4.11.3",
     "oauth2orize": "1.8.0",
     "passport": "0.3.2",
@@ -36,6 +40,11 @@
     "passport-oauth2-client-password": "0.1.2"
   },
   "devDependencies": {
+    "babel-cli": "6.24.1",
+    "babel-preset-es2015": "6.24.1",
+    "babel-preset-stage-2": "6.24.1",
+    "babel-register": "6.24.1",
+    "mocha": "3.4.2",
     "nodemon": "1.11.0"
   }
 }

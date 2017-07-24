@@ -1,6 +1,6 @@
 // server.js
 
-// BASE SETUP	
+// BASE SETUP
 // =============================================================================
 
 // call the packages we need
@@ -9,6 +9,7 @@ var app        = express();                 // define our app using express
 var mongoose   = require('mongoose');
 var bodyParser = require('body-parser');
 var passport   = require('passport');
+import {graphql} from 'graphql';
 // Connect to the MongoDB
 var db = require('./db/mongoose')
 const middleware = require('./middleware')
