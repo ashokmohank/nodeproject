@@ -3,7 +3,7 @@ var BasicStrategy = require('passport-http').BasicStrategy;
 var ClientPasswordStrategy = require('passport-oauth2-client-password').Strategy;
 var BearerStrategy = require('passport-http-bearer').Strategy;
 var config = require('config');
-var tokenLife = config.get('nodeproject.security.tokenLife'); 
+var tokenLife = config.get('nodeproject.security.tokenLife');
 
 var libs = process.cwd() + '/web/';
 var User = require(libs + 'model/user');
@@ -16,8 +16,8 @@ passport.use(new BasicStrategy(
     function(req, username, password, done) {
         console.log('basic str auth1'+req.body.clientId);
 	User.findOne({ username: username }, function(err, user) {
-            if (err) { 
-            	return done(err); 
+            if (err) {
+            	return done(err);
             }
 
             if (!user || !user.checkPassword(password)) {
@@ -26,32 +26,32 @@ passport.use(new BasicStrategy(
 
 	    //return done(null, user);
 	    Client.findOne({ clientId: req.body.clientId }, function(err, client) {
-		    if (err) { 
-		    	return done(err); 
+		    if (err) {
+		    	return done(err);
 		    }
 
-		    if (!client) { 
-		    	return done(null, false); 
+		    if (!client) {
+		    	return done(null, false);
 		    }
 
-		    if (client.clientSecret !== req.body.clientSecret) { 
-		    	return done(null, false); 
+		    if (client.clientSecret !== req.body.clientSecret) {
+		    	return done(null, false);
 		    }
 
 		    return done(null, client);
             });
         });
         /*Client.findOne({ clientId: username }, function(err, client) {
-            if (err) { 
-            	return done(err); 
+            if (err) {
+            	return done(err);
             }
 
-            if (!client) { 
-            	return done(null, false); 
+            if (!client) {
+            	return done(null, false);
             }
 
-            if (client.clientSecret !== password) { 
-            	return done(null, false); 
+            if (client.clientSecret !== password) {
+            	return done(null, false);
             }
 
             return done(null, client);
@@ -63,16 +63,16 @@ passport.use(new ClientPasswordStrategy(
     function(clientId, clientSecret, done) {
         console.log('client pwd'+clientId);
         Client.findOne({ clientId: clientId }, function(err, client) {
-            if (err) { 
-            	return done(err); 
+            if (err) {
+            	return done(err);
             }
 
-            if (!client) { 
-            	return done(null, false); 
+            if (!client) {
+            	return done(null, false);
             }
 
-            if (client.clientSecret !== clientSecret) { 
-            	return done(null, false); 
+            if (client.clientSecret !== clientSecret) {
+            	return done(null, false);
             }
 
             return done(null, client);
@@ -85,12 +85,12 @@ passport.use(new BearerStrategy(
 	console.log('bearer str ');
         AccessToken.findOne({ token: accessToken }, function(err, token) {
 
-            if (err) { 
-            	return done(err); 
+            if (err) {
+            	return done(err);
             }
 
-            if (!token) { 
-            	return done(null, false); 
+            if (!token) {
+            	return done(null, false);
             }
 
             if( Math.round((Date.now()-token.created)/1000) > tokenLife ) {
@@ -98,20 +98,20 @@ passport.use(new BearerStrategy(
                 AccessToken.remove({ token: accessToken }, function (err) {
                     if (err) {
                     	return done(err);
-                    } 
+                    }
                 });
 
                 return done(null, false, { message: 'Token expired' });
             }
 
             User.findById(token.userId, function(err, user) {
-            
-                if (err) { 
-                	return done(err); 
+
+                if (err) {
+                	return done(err);
                 }
 
-                if (!user) { 
-                	return done(null, false, { message: 'Unknown user' }); 
+                if (!user) {
+                	return done(null, false, { message: 'Unknown user' });
                 }
 
                 var info = { scope: '*' };
