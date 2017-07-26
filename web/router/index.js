@@ -3,6 +3,9 @@
 const express = require('express')
 const api = require('./api')
 const oauth = require('../middleware/oauth2')
+import {buildSchema} from 'graphql';
+import graphqlHTTP from 'express-graphql';
+import schema from '../graphql';
 
 var router = express.Router();          // get an instance of the express Router
 
@@ -26,7 +29,7 @@ router.route('/token')
 // =============================================================================
 // test route to make sure everything is working (accessed at GET http://localhost:8080)
 router.get('/', function(req, res) {
-    res.json({ message: 'hooray! welcome to our api!' });   
+    res.json({ message: 'hooray! welcome to our api!' });
 });
 //Users component
 router.route('/api/users')
@@ -35,6 +38,18 @@ router.route('/api/users')
 //test component - To experiment development
 //router.route('/api/test')
 //  .get(api.test);
+//graphql component
+router.use('/graphqlauth', graphqlHTTP({
+  schema: schema,
+  //rootValue: root,
+  graphiql: true,
+  formatError: error => ({
+    message: error.message,
+    locations: error.locations,
+    stack: error.stack,
+    path: error.path
+  })
+}));
 router.route('/api/test/:id')
   .get(api.test);
 module.exports = router
