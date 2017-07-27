@@ -5,9 +5,10 @@ import {
   GraphQLString
 } from 'graphql';
 
+import Promise from 'promise';
 import userType from '../../types/user';
-import getProjection from '../../get-projection';
-import UserModel from '../../../model/user';
+//import UserModel from '../../../model/user';
+import {userCore} from '../../../core';
 
 export default {
   type: new GraphQLList(userType),
@@ -18,11 +19,10 @@ export default {
     }
   },
   resolve (root, params, options) {
-    //const projection = getProjection(options.fieldASTs[0]);
-
-    return UserModel
-      .find()
-      //.select(projection)
-      .exec();
+    //return UserModel.find().exec();
+    return new Promise((resolve, reject) => { userCore.userService.getAllUser(function(cb) {
+        return resolve(cb);
+      })
+    });
   }
 };

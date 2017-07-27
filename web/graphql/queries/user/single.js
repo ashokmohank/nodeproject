@@ -4,28 +4,27 @@ import {
   GraphQLNonNull,
   GraphQLString
 } from 'graphql';
-//import {Types} from 'mongoose';
 
+import Promise from 'promise';
 import userType from '../../types/user';
 import getProjection from '../../get-projection';
 import UserModel from '../../../model/user';
+import {userCore} from '../../../core';
 
 export default {
   type: userType,
   args: {
-    id: {
-      name: 'id',
-      type: GraphQLString
-    }
+      id: {
+        name: 'id',
+        type: GraphQLString
+      }
   },
   resolve (root, params, options) {
     //const projection = getProjection(options.fieldASTs[0]);
-
-    return UserModel
-      //.findById(params.id)
-      .findOne({ _id: params.id })
-      //.find()
-      //.select(projection)
-      .exec();
+    //return userCore.userService.getUserById(params.id);
+    return new Promise((resolve, reject) => { userCore.userService.getUserById(params.id, function(cb) {
+        return resolve(cb);
+      })
+    });
   }
 };

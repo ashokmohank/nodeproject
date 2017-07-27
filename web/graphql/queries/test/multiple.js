@@ -22,22 +22,10 @@ export default {
   },
   resolve (root, params, options) {
     //const projection = getProjection(options.fieldASTs[0]);
-console.log("gql1");
+    console.log("gql1");
     return TokenModel
       .find()
       //.select(projection)
       .exec();
   }
-  /*,fields: {
-    userId: {
-      resolve (root, params, options) {
-        //const projection = getProjection(options.fieldASTs[0]);
-console.log("gql");
-        return UserModel
-          .find({})
-          //.select(projection)
-          .exec();
-      }
-    }
-  }*/
 };

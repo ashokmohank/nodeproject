@@ -32,6 +32,7 @@ router.get('/', function(req, res) {
     res.json({ message: 'hooray! welcome to our api!' });
 });
 //Users component
+console.log(api);
 router.route('/api/users')
   .post(api.users.postUsers)
   .get(api.users.getUsers);
@@ -52,4 +53,5 @@ router.use('/graphqlauth', graphqlHTTP({
 }));
 router.route('/api/test/:id')
   .get(api.test);
+
 module.exports = router

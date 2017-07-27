@@ -22,7 +22,8 @@ var mongoose = require('mongoose'),
 			default: Date.now
 		}
 	});
-
+User.set('toJSON', { getters: true,virtuals: true });
+//User.set('toObject', { virtuals: true })
 // Execute before each user.save() call
 User.pre('save', function(callback) {
   var user = this;

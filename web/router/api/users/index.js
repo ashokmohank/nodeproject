@@ -1,6 +1,5 @@
 'use strict'
 
-const users = require('./usercontroller')
+const users = require('./userController')
 console.log('user/api/index');
 module.exports = users
-

@@ -4,6 +4,7 @@
 // =============================================================================
 
 // call the packages we need
+'user strict'
 var express    = require('express');        // call express
 var app        = express();                 // define our app using express
 var mongoose   = require('mongoose');
@@ -64,7 +65,7 @@ app.use('/', function (req, res, next) {
 });
 
 app.all('/token', oauth2.token);
-app.all('/graphqlauth',passport.authenticate('bearer', { session: false }));
+app.all('/graphqlauth', passport.authenticate('bearer', { session: false }));
 app.all('/api/*', passport.authenticate('bearer', { session: false }));
 app.use('/',router);
 

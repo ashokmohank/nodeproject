@@ -1,6 +1,7 @@
 // Load required packages
 var libs = process.cwd() + '/web/';
 var User = require(libs + 'model/user');
+import {userCore} from '../../../core';
 //var User = require('../../../model/user');
 
 // Create endpoint /api/users for POST
@@ -22,11 +23,14 @@ exports.postUsers = function(req, res) {
 
 // Create endpoint /api/users for GET
 exports.getUsers = function(req, res) {
-  console.log("getusers accessed")
-  User.find(function(err, users) {
+  //callback
+  userCore.userService.getAllUser(function(cb) {
+    res.json(cb);
+  });
+  /*User.find(function(err, users) {
     if (err)
       res.send(err);
 
     res.json(users);
-  });
+  });*/
 };
