@@ -7,9 +7,9 @@ import {
 } from 'graphql';
 
 import Promise from 'promise';
-import userType from './user';
-import UserModel from '../../model/user';
-import {userCore} from '../../core';
+import userType from '../user/userType';
+import UserModel from '../../../model/user';
+import {userCore} from '../../../core';
 
 export default new GraphQLObjectType({
   name: 'accessToken',

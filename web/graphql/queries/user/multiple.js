@@ -6,7 +6,7 @@ import {
 } from 'graphql';
 
 import Promise from 'promise';
-import userType from '../../types/user';
+import userType from '../../types/user/userType';
 //import UserModel from '../../../model/user';
 import {userCore} from '../../../core';
 

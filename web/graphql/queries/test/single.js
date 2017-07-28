@@ -6,7 +6,7 @@ import {
 } from 'graphql';
 import {Types} from 'mongoose';
 
-import tokenType from '../../types/accessToken';
+import tokenType from '../../types/test/tokenType';
 import getProjection from '../../get-projection';
 import TokenModel from '../../../model/accessToken';
 
