@@ -2,8 +2,6 @@
 import {
   GraphQLInputObjectType,
   GraphQLString,
-  GraphQLID,
-  GraphQLNonNull
 } from 'graphql';
 
 export default new GraphQLInputObjectType({
@@ -15,10 +13,10 @@ export default new GraphQLInputObjectType({
     hashedPassword: {
       type: GraphQLString
     },
-    username:{
+    username: {
       type: GraphQLString
     },
-    salt:{
+    salt: {
       type: GraphQLString
     }
   }

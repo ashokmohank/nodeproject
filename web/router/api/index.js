@@ -1,9 +1,8 @@
 'use strict'
 
-const users = require('./users')
-const test = require('./test')
+const users = require('./users');
+const test = require('./test');
 
 module.exports = {
-  users
-  ,test
-}
+  users,
+  test };
