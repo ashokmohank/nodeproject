@@ -1,5 +1,12 @@
+import redis from 'redis';
 import Promise from 'promise';
 import UserModel from '../../model/user';
+
+const config = require('config');
+
+const redisHost = config.get('nodeproject.cacheConfig.host');
+const redisPort = config.get('nodeproject.cacheConfig.port');
+const cacheClient = redis.createClient(redisPort, redisHost);
 
 exports.getUserById = function getUserById(userId, callback) {
   console.log('Inside userService getUserById');
@@ -24,20 +31,33 @@ exports.getUsersById = function getUsersById(userId, callback) {
 };
 
 exports.getAllUser = function getAllUser(callback) {
-  console.log('Inside userService:getallUser');
-  UserModel
-    .find()
-    .lean()
-    .exec((err, users) => callback(users));
-  // return UserModel
-  //  .find()
-  //  .exec();
+  cacheClient.get('allusers', (error, allusers) => {
+    if (error) { throw error; }
+    if (allusers) {
+      callback(JSON.parse(allusers));
+      console.log('cache userService:getallUser');
+    } else {
+      console.log('Inside userService:getallUser');
+      UserModel
+        .find()
+        .lean()
+        .exec((err, users) => {
+          client.set('allusers', JSON.stringify(users), (errorSet) => {
+            if (errorSet) { throw errorSet; }
+          });
+          callback(users);
+        });
+      // return UserModel
+      //  .find()
+      //  .exec();
+    }
+  });
 };
 
 exports.createUser = function createUser(data, callback) {
   console.log('Inside userService:createUser');
   const userModelTmp = new UserModel(data);
   return new Promise((resolve, reject) => {
-    userModelTmp.save((err, users) => resolve(users))
+    userModelTmp.save((err, users) => resolve(users));
   });
 };
