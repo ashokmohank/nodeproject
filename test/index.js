@@ -8,6 +8,7 @@ import chai, { expect, should } from 'chai';
 // chai.use(chaiAsPromised);
 // should();
 /* global describe it expect:true */
+
 let testToken = null;
 
 describe('Test API Node Server', () => {

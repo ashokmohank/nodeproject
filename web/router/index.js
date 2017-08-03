@@ -36,9 +36,6 @@ console.log(api);
 router.route('/api/users')
   .post(api.users.postUsers)
   .get(api.users.getUsers);
-// test component - To experiment development
-// router.route('/api/test')
-//  .get(api.test);
 // graphql component
 router.use('/graphqlauth', graphqlHTTP({
   schema: schema,
@@ -50,6 +47,8 @@ router.use('/graphqlauth', graphqlHTTP({
     path: error.path
   })
 }));
+// test component - To experiment development
+// router.route('/api/test')
 router.route('/api/test/:id')
   .get(api.test);
 

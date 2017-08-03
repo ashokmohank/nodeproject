@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/ashokmohank/nodeproject#readme",
   "dependencies": {
+    "amqplib": "0.5.1",
     "body-parser": "1.17.2",
     "bunyan": "1.8.10",
     "config": "1.26.1",

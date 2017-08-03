@@ -11,6 +11,7 @@ var mongoose   = require('mongoose');
 var bodyParser = require('body-parser');
 var passport   = require('passport');
 import {logger, oauth2, auth} from './middleware'
+
 // Connect to the MongoDB
 var db = require('./db/mongoose')
 //const middleware = require('./middleware')
@@ -44,10 +45,10 @@ app.all('/*', function(req, res, next) {
   }
 });
 
-//For testing with graphql UI - To be removed in production
+// For testing with graphql UI - To be removed in production
 app.use('/graphql', graphqlHTTP({
   schema: schema,
-  //rootValue: root,
+  // rootValue: root,
   graphiql: true,
   formatError: error => ({
     message: error.message,
@@ -56,19 +57,18 @@ app.use('/graphql', graphqlHTTP({
     path: error.path
   })
 }));
-//end of graphql
+// end of graphql
 
-//Middelwares
+// Middelwares
 app.use('/', function (req, res, next) {
-    req.log = logger;
-    next();
+  req.log = logger;
+  next();
 });
 
 app.all('/token', oauth2.token);
 app.all('/graphqlauth', passport.authenticate('bearer', { session: false }));
 app.all('/api/*', passport.authenticate('bearer', { session: false }));
-app.use('/',router);
-
+app.use('/', router);
 
 
 module.exports = app
