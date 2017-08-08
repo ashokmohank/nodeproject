@@ -1,6 +1,8 @@
 import redis from 'redis';
 import Promise from 'promise';
 import UserModel from '../../model/user';
+import pub from '../../broker/rabbitmq/publish';
+import sub from '../../broker/rabbitmq/subscribe';
 
 const config = require('config');
 
@@ -34,6 +36,8 @@ exports.getAllUser = function getAllUser(callback) {
   cacheClient.get('allusers', (error, allusers) => {
     if (error) { throw error; }
     if (allusers) {
+      // const p = pub.publishMessage('ex', 'message from user', 'routingKey');
+      const s = sub.subscribeMessage('ex', 'routingKey', cb => console.log(cb));
       callback(JSON.parse(allusers));
       console.log('cache userService:getallUser');
     } else {
@@ -42,7 +46,7 @@ exports.getAllUser = function getAllUser(callback) {
         .find()
         .lean()
         .exec((err, users) => {
-          client.set('allusers', JSON.stringify(users), (errorSet) => {
+          cacheClient.set('allusers', JSON.stringify(users), (errorSet) => {
             if (errorSet) { throw errorSet; }
           });
           callback(users);
