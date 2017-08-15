@@ -1,0 +1,20 @@
+{
+    // Use IntelliSense to learn about possible Node.js debug attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "runtimeExecutable": "${workspaceRoot}/node_modules/babel-cli/bin/babel-node.js",
+            "name": "Launch Program",
+            //"program": "${workspaceRoot}/node_modules/nodemon/bin/nodemon.js",
+            //"args": ["${workspaceRoot}/index.js"],
+            "program": "${workspaceRoot}/index.js",
+            "restart": true,
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        }
+    ]
+}

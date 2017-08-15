@@ -1,6 +1,7 @@
 'use strict'
 import graphqlHTTP from 'express-graphql';
 import schema from '../graphql';
+import { graphql } from 'graphql';
 
 const express = require('express')
 const api = require('./api')
@@ -37,7 +38,7 @@ router.route('/api/users')
   .post(api.users.postUsers)
   .get(api.users.getUsers);
 // graphql component
-router.use('/graphqlauth', graphqlHTTP({
+router.use('/graphqlauth0', graphqlHTTP({
   schema: schema,
   graphiql: true,
   formatError: error => ({
@@ -47,6 +48,29 @@ router.use('/graphqlauth', graphqlHTTP({
     path: error.path
   })
 }));
+
+router.post('/graphqlauth', (req, res) => {
+  let query = '';
+  let variables = {};
+  if (typeof req.body === 'string') {
+    query = req.body;
+  } else if (typeof req.body === 'object') {
+    query = req.body.query;
+    variables = req.body.variables;
+  }
+  try {
+    graphql(schema, query, {}, {}, variables)
+      .then(result => res.status(200)
+        .json(result))
+      .catch((e) => {
+        throw e;
+      });
+  } catch (e) {
+    console.log(e);
+    res.status(500)
+      .send(e.message);
+  }
+});
 // test component - To experiment development
 // router.route('/api/test')
 router.route('/api/test/:id')

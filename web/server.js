@@ -5,21 +5,20 @@
 
 // call the packages we need
 'user strict'
-var express    = require('express');        // call express
-var app        = express();                 // define our app using express
-var mongoose   = require('mongoose');
-var bodyParser = require('body-parser');
-var passport   = require('passport');
-import {logger, oauth2, auth} from './middleware'
-
-// Connect to the MongoDB
-var db = require('./db/mongoose')
-//const middleware = require('./middleware')
-const router = require('./router')
-//graphql - added here for schema test
-import {buildSchema} from 'graphql';
+import express from 'express';
+import mongoose from 'mongoose';
+import bodyParser from 'body-parser';
+import passport from 'passport';
 import graphqlHTTP from 'express-graphql';
+import db from './db/mongoose';
+import { logger, oauth2, auth } from './middleware';
 import schema from './graphql';
+import router from './router';
+
+const app = express();
+// define our app using express
+// graphql - added here for schema test
+
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -31,11 +30,11 @@ app.use(bodyParser.json());
 
 app.use(passport.initialize());
 
-app.all('/*', function(req, res, next) {
+app.all('/*', (req, res, next) => {
   // CORS headers
   res.header("Access-Control-Allow-Origin", "*"); // restrict it to the required domain
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-  console.log(req.method)
+  console.log(req.method);
   // Set custom headers for CORS
   res.header('Access-Control-Allow-Headers', 'Content-type,Accept,X-Access-Token,X-Key');
   if (req.method == 'OPTIONS') {
@@ -60,7 +59,7 @@ app.use('/graphql', graphqlHTTP({
 // end of graphql
 
 // Middelwares
-app.use('/', function (req, res, next) {
+app.use('/', (req, res, next) => {
   req.log = logger;
   next();
 });
@@ -71,4 +70,4 @@ app.all('/api/*', passport.authenticate('bearer', { session: false }));
 app.use('/', router);
 
 
-module.exports = app
+module.exports = app;
