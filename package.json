@@ -7,7 +7,8 @@
     "start": "nodemon index.js --exec babel-node",
     "build": "babel web -d dist",
     "serve": "node .",
-    "test": "mocha --compilers js:babel-register"
+    "test": "mocha --compilers js:babel-register",
+    "update-schema": "babel-node ./scripts/updateSchema.js"
   },
   "repository": {
     "type": "git",
@@ -34,6 +35,7 @@
     "express": "4.15.3",
     "express-graphql": "0.6.6",
     "graphql": "0.10.5",
+    "graphql-relay": "0.5.2",
     "mongoose": "4.11.3",
     "oauth2orize": "1.8.0",
     "passport": "0.3.2",

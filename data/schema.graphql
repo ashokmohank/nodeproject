@@ -1,0 +1,43 @@
+type accessToken {
+  userId: [User]
+  token: String
+  clientId: String
+}
+
+type Mutation {
+  addUser(data: UserInputType!): Boolean
+}
+
+# An object with an ID
+interface Node {
+  # The id of the object.
+  id: ID!
+}
+
+type Query {
+  user(id: String): User
+  users(userId: String): [User]
+  test(userId: String): accessToken
+  tests(userId: String): [accessToken]
+
+  # Fetches an object given its ID
+  node(
+    # The ID of an object
+    id: ID!
+  ): Node
+}
+
+type User {
+  # The ID of an object
+  id: ID!
+  _id: String
+  hashedPassword: String
+  username: String
+}
+
+input UserInputType {
+  _id: String
+  hashedPassword: String
+  username: String
+  salt: String
+}

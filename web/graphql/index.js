@@ -5,7 +5,13 @@ import {
 
 import mutations from './mutations';
 import queries from './queries';
-//import mutations from './subscriptions';
+import {
+  NodeField,
+} from './interface/nodeInterface';
+
+// import mutations from './subscriptions';
+
+queries.node = NodeField;
 
 export default new GraphQLSchema({
   query: new GraphQLObjectType({
