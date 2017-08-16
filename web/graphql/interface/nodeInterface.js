@@ -4,7 +4,7 @@ import { nodeDefinitions, fromGlobalId } from 'graphql-relay';
 
 // import User from '../loader/UserLoader';
 // import { UserLoader, ViewerLoader } from '../loader';
-
+import UserModel from '../../model/user';
 import UserType from '../types/user';
 import { userCore } from '../../core';
 
@@ -24,9 +24,9 @@ const {
   },
   // A method that maps from an object to a type
   (obj) => {
-    // console.log('obj: ', typeof obj, obj.constructor);
-    if (obj instanceof UserType) {
-      return UserType;
+    //console.log('obj: ', typeof obj, obj.constructor);
+    if (obj instanceof UserModel) {
+      return UserType.userType;
     }
     return null;
   },

@@ -10,10 +10,11 @@ import {
   connectionArgs,
   fromGlobalId,
 } from 'graphql-relay';
+import { NodeInterface } from '../../interface/nodeInterface';
 
 export default new GraphQLObjectType({
   name: 'User',
-  fields: {
+  fields: () => ({
     id: globalIdField('User'),
     _id: {
       type: GraphQLString
@@ -23,6 +24,7 @@ export default new GraphQLObjectType({
     },
     username:{
       type: GraphQLString
-    }
-  }
+    },
+  }),
+  interfaces: () => [NodeInterface],
 });
