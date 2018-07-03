@@ -8,7 +8,7 @@ const config = require('config');
 
 const redisHost = config.get('nodeproject.cacheConfig.host');
 const redisPort = config.get('nodeproject.cacheConfig.port');
-const cacheClient = redis.createClient(redisPort, redisHost);
+//const cacheClient = redis.createClient(redisPort, redisHost);
 
 exports.getUserById = function getUserById(userId, callback) {
   console.log('Inside userService getUserById');
@@ -33,7 +33,7 @@ exports.getUsersById = function getUsersById(userId, callback) {
 };
 
 exports.getAllUser = function getAllUser(callback) {
-  cacheClient.get('allusers', (error, allusers) => {
+  /*cacheClient.get('allusers', (error, allusers) => {
     if (error) { throw error; }
     if (allusers) {
       // const p = pub.publishMessage('ex', 'message from user', 'routingKey');
@@ -55,13 +55,18 @@ exports.getAllUser = function getAllUser(callback) {
       //  .find()
       //  .exec();
     }
-  });
+  });*/
 };
 
 exports.createUser = function createUser(data, callback) {
   console.log('Inside userService:createUser');
   const userModelTmp = new UserModel(data);
-  return new Promise((resolve, reject) => {
-    userModelTmp.save((err, users) => resolve(users));
+  let state = new Promise((resolve, reject) => {
+    userModelTmp.save((err, users) => { 
+      if(err) {
+        reject(err);
+      }
+      resolve(users)});
   });
+    callback()
 };

@@ -15,6 +15,7 @@ exports.postUsers = function(req, res) {
     hashedPassword: req.body.hashedPassword
   };
   userCore.userService.createUser(userData, function(cb) {
+    console.log(cb);
     return cb;
   }).then(res.json({ message: 'Added new user' })) ;
 };
@@ -23,6 +24,20 @@ exports.postUsers = function(req, res) {
 exports.getUsers = function(req, res) {
   // callback
   userCore.userService.getAllUser(function(cb) {
+    res.json(cb);
+  });
+  /*  User.find(function(err, users) {
+    if (err)
+      res.send(err);
+
+    res.json(users);
+  }); */
+};
+
+// Create endpoint /api/users for GET
+exports.getOneUser = (req, res) => {
+  // callback
+  userCore.userService.getAllUser((cb) => {
     res.json(cb);
   });
   /*  User.find(function(err, users) {
